@@ -7,4 +7,20 @@ include(GNUInstallDirs)
 # find all required libraries first
 
 # telepathy-glib
-pkg_check_modules(TP_GLIB REQUIRED telepathy-glib)
+pkg_search_module(TP_GLIB REQUIRED telepathy-glib)
+
+include_directories(
+  ${TP_GLIB_INCLUDE_DIRS}
+)
+
+link_directories(
+  ${TP_GLIB_LIBRARY_DIRS}
+)
+
+add_executable(telepathy-steam
+  main.cpp
+)
+
+target_link_libraries(telepathy-steam
+  ${TP_GLIB_LIBRARIES}
+)
