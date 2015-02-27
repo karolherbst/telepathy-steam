@@ -1,8 +1,16 @@
 cmake_minimum_required(VERSION 2.8)
 project(telepathy-steam)
 
+include(CheckCXXCompilerFlag)
 include(FindPkgConfig)
 include(GNUInstallDirs)
+
+# check used compiler flags
+check_cxx_compiler_flag("-std=c++11" HAS_CXX11)
+if(NOT HAS_CXX11)
+  message(FATAL_ERROR "C++11 support required")
+endif()
+list(APPEND CMAKE_CXX_FLAGS -std=c++11)
 
 # find all required libraries first
 
