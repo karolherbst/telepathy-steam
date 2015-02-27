@@ -24,3 +24,8 @@ add_executable(telepathy-steam
 target_link_libraries(telepathy-steam
   ${TP_GLIB_LIBRARIES}
 )
+
+install(
+  TARGETS telepathy-steam
+  DESTINATION ${CMAKE_INSTALL_FULL_LIBEXECDIR}
+)
