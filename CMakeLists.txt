@@ -4,7 +4,7 @@ project(telepathy-steam)
 include(FindPkgConfig)
 include(GNUInstallDirs)
 
-# fine all required libraries first
+# find all required libraries first
 
 # telepathy-glib
 pkg_check_modules(TP_GLIB REQUIRED telepathy-glib)
