@@ -1,0 +1,7 @@
+[ConnectionManager]
+Name = steam
+BusName = org.freedesktop.Telepathy.ConnectionManager.steam
+ObjectPath = /org/freedesktop/Telepathy/ConnectionManager/steam
+
+[Protocol steam]
+EnglishName = Steam Chat

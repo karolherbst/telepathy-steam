@@ -1,0 +1,3 @@
+[D-Bus Service]
+Name=org.freedesktop.Telepathy.ConnectionManager.steam
+Exec=@CMAKE_INSTALL_FULL_LIBEXECDIR@/telepathy-steam

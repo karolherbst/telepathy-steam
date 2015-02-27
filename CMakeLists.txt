@@ -29,3 +29,17 @@ install(
   TARGETS telepathy-steam
   DESTINATION ${CMAKE_INSTALL_FULL_LIBEXECDIR}
 )
+
+# dbus file
+configure_file(steam.service.in org.freedesktop.Telepathy.ConnectionManager.steam.service)
+
+install(
+  FILES ${CMAKE_CURRENT_BINARY_DIR}/org.freedesktop.Telepathy.ConnectionManager.steam.service
+  DESTINATION ${CMAKE_INSTALL_FULL_DATAROOTDIR}/dbus-1/services
+)
+
+# telepathy file
+install(
+  FILES steam.manager
+  DESTINATION ${CMAKE_INSTALL_FULL_DATAROOTDIR}/telepathy/managers
+)
