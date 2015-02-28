@@ -24,6 +24,13 @@ static void shut_down(TpBaseConnection *self)
 
 static gboolean start_connecting(TpBaseConnection *self, GError **error)
 {
+	// the steam id is trivially to get, because we know it already
+	gchar sid[] = "";
+	tp_base_connection_set_self_handle(self,
+		tp_handle_ensure(
+			tp_base_connection_get_handles(self, TP_HANDLE_TYPE_CONTACT),
+			sid, nullptr, nullptr)
+		);
 	std::thread([self](){
 		std::this_thread::sleep_for(std::chrono::seconds(2));
 		tp_base_connection_change_status(self, TP_CONNECTION_STATUS_DISCONNECTED, TP_CONNECTION_STATUS_REASON_NONE_SPECIFIED);
