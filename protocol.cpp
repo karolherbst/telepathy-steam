@@ -7,7 +7,11 @@ G_DEFINE_TYPE(SteamProtocol, steam_protocol, TP_TYPE_BASE_PROTOCOL);
 
 class SteamProtocolPriv
 {
+};
 
+static TpCMParamSpec steamParams[]
+{
+	{ 0 }
 };
 
 static void constructed(GObject *object)
@@ -27,7 +31,7 @@ static void finalize(GObject *object)
 
 static const TpCMParamSpec * get_parameters(TpBaseProtocol * self)
 {
-	return nullptr;
+	return steamParams;
 }
 
 static TpBaseConnection * new_connection(TpBaseProtocol * self, GHashTable * asv, GError ** error)
