@@ -20,13 +20,16 @@ endforeach()
 # find all required libraries first
 
 # telepathy-glib
+pkg_search_module(GOBJECT REQUIRED gobject-2.0)
 pkg_search_module(TP_GLIB REQUIRED telepathy-glib)
 
 include_directories(
+  ${GOBJECT_INCLUDE_DIRS}
   ${TP_GLIB_INCLUDE_DIRS}
 )
 
 link_directories(
+  ${GOBJECT_LIBRARY_DIRS}
   ${TP_GLIB_LIBRARY_DIRS}
 )
 
@@ -35,6 +38,7 @@ add_executable(telepathy-steam
 )
 
 target_link_libraries(telepathy-steam
+  ${GOBJECT_LIBRARIES}
   ${TP_GLIB_LIBRARIES}
 )
 
