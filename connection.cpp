@@ -1,6 +1,8 @@
 #include "connection.h"
 #include "glib-helpers.h"
 
+#include <thread>
+
 #include <telepathy-glib/handle-repo-dynamic.h>
 
 G_DEFINE_TYPE(SteamConnection, steam_connection, TP_TYPE_BASE_CONNECTION);
@@ -22,11 +24,11 @@ static void shut_down(TpBaseConnection *self)
 
 static gboolean start_connecting(TpBaseConnection *self, GError **error)
 {
-	if(error != nullptr)
-	{
-		*error = g_error_new(TP_ERROR, 0, "not implemented");
-	}
-	return false;
+	std::thread([self](){
+		std::this_thread::sleep_for(std::chrono::seconds(2));
+		tp_base_connection_change_status(self, TP_CONNECTION_STATUS_DISCONNECTED, TP_CONNECTION_STATUS_REASON_NONE_SPECIFIED);
+	}).detach();
+	return true;
 }
 
 void steam_connection_class_init(SteamConnectionClass * klass)
