@@ -1,15 +1,7 @@
 #include "connection-manager.h"
+#include "glib-helpers.h"
 
 #include <cassert>
-
-#define GLIB_CALL_PARENT(klass, method, object) \
-{ \
-	auto method = G_OBJECT_CLASS(steam_connection_manager_parent_class)-> method; \
-	if(method != nullptr) \
-	{ \
-		method(object); \
-	} \
-}
 
 class SteamConnectionManagerPriv
 {
