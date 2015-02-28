@@ -3,11 +3,9 @@
 #include <glib-object.h>
 #include <telepathy-glib/base-connection-manager.h>
 
-class SteamConnectionManagerPriv;
 struct SteamConnectionManager
 {
 	TpBaseConnectionManager parent;
-	SteamConnectionManagerPriv * priv;
 };
 
 struct SteamConnectionManagerClass
