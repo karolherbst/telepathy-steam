@@ -1,3 +1,4 @@
+#include "connection.h"
 #include "glib-helpers.h"
 #include "protocol.h"
 
@@ -36,7 +37,10 @@ static const TpCMParamSpec * get_parameters(TpBaseProtocol * self)
 
 static TpBaseConnection * new_connection(TpBaseProtocol * self, GHashTable * asv, GError ** error)
 {
-	return nullptr;
+	SteamConnection * conn = STEAM_CONNECTION(g_object_new(STEAM_TYPE_CONNECTION,
+		"protocol", "steam",
+		nullptr));
+	return TP_BASE_CONNECTION(conn);
 }
 
 void steam_protocol_class_init(SteamProtocolClass * klass)
