@@ -34,6 +34,7 @@ link_directories(
 )
 
 add_executable(telepathy-steam
+  connection-manager.cpp
   main.cpp
 )
 
