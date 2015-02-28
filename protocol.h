@@ -3,11 +3,9 @@
 #include <glib-object.h>
 #include <telepathy-glib/base-protocol.h>
 
-class SteamProtocolPriv;
 struct SteamProtocol
 {
 	TpBaseProtocol parent;
-	SteamProtocolPriv * priv;
 };
 
 struct SteamProtocolClass
