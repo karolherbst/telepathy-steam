@@ -10,7 +10,12 @@ check_cxx_compiler_flag("-std=c++11" HAS_CXX11)
 if(NOT HAS_CXX11)
   message(FATAL_ERROR "C++11 support required")
 endif()
-list(APPEND CMAKE_CXX_FLAGS -std=c++11)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+
+# add some common sense linker flags
+foreach(type EXE MODULE SHARED STATIC)
+  set(CMAKE_${type}_LINKER_FLAGS "${CMAKE_${type}_LINKER_FLAGS} -Wl,--as-needed -Wl,-z,defs")
+endforeach()
 
 # find all required libraries first
 
