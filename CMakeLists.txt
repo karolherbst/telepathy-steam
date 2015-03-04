@@ -25,10 +25,12 @@ foreach(type EXE MODULE SHARED STATIC)
 endforeach()
 
 # find all required libraries first
+pkg_check_modules(DBUS REQUIRED dbus-1)
 pkg_check_modules(GOBJECT REQUIRED gobject-2.0)
 pkg_check_modules(TP_GLIB REQUIRED telepathy-glib>=0.11.11)
 
 include_directories(
+  ${DBUS_INCLUDE_DIRS}
   ${GOBJECT_INCLUDE_DIRS}
   ${TP_GLIB_INCLUDE_DIRS}
 )

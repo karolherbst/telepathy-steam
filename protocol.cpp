@@ -2,12 +2,35 @@
 #include "glib-helpers.h"
 #include "protocol.h"
 
-#include <new>
+#include <dbus/dbus-protocol.h>
 
 G_DEFINE_TYPE(SteamProtocol, steam_protocol, TP_TYPE_BASE_PROTOCOL);
 
+// allthough registering isn't possible yet, we should declare such parameters already
 static TpCMParamSpec steamParams[]
 {
+	{
+		.name = "username",
+		.dtype = DBUS_TYPE_STRING_AS_STRING,
+		.gtype = G_TYPE_STRING,
+		.flags = TP_CONN_MGR_PARAM_FLAG_REQUIRED | TP_CONN_MGR_PARAM_FLAG_REGISTER,
+		.def = nullptr,
+		.offset = 0,
+		.filter = nullptr,
+		.filter_data = nullptr,
+		.setter_data = nullptr
+	},
+	{
+		.name = "password",
+		.dtype = DBUS_TYPE_STRING_AS_STRING,
+		.gtype = G_TYPE_STRING,
+		.flags = TP_CONN_MGR_PARAM_FLAG_SECRET,
+		.def = nullptr,
+		.offset = 0,
+		.filter = nullptr,
+		.filter_data = nullptr,
+		.setter_data = nullptr
+	},
 	{ 0 }
 };
 
