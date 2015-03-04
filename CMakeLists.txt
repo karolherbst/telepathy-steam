@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(telepathy-steam)
+project(telepathy-steam CXX)
 
 include(CheckCXXCompilerFlag)
 include(FindPkgConfig)
@@ -25,10 +25,8 @@ foreach(type EXE MODULE SHARED STATIC)
 endforeach()
 
 # find all required libraries first
-
-# telepathy-glib
-pkg_search_module(GOBJECT REQUIRED gobject-2.0)
-pkg_search_module(TP_GLIB REQUIRED telepathy-glib)
+pkg_check_modules(GOBJECT REQUIRED gobject-2.0)
+pkg_check_modules(TP_GLIB REQUIRED telepathy-glib>=0.11.11)
 
 include_directories(
   ${GOBJECT_INCLUDE_DIRS}
