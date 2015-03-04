@@ -7,14 +7,19 @@
 
 G_DEFINE_TYPE(SteamConnection, steam_connection, TP_TYPE_BASE_CONNECTION);
 
+static GPtrArray * create_channel_managers(TpBaseConnection *self)
+{
+	return g_ptr_array_new();
+}
+
 static void create_handle_repos(TpBaseConnection *self, TpHandleRepoIface *repos[TP_NUM_HANDLE_TYPES])
 {
 	repos[TP_HANDLE_TYPE_CONTACT] = tp_dynamic_handle_repo_new(TP_HANDLE_TYPE_CONTACT, nullptr, nullptr);
 }
 
-static GPtrArray * create_channel_managers(TpBaseConnection *self)
+static gchar * get_unique_connection_name(TpBaseConnection *self)
 {
-	return g_ptr_array_new();
+	return g_strdup("steam");
 }
 
 static void shut_down(TpBaseConnection *self)
@@ -43,6 +48,7 @@ void steam_connection_class_init(SteamConnectionClass * klass)
 	klass->parent_class.create_channel_factories = nullptr;
 	klass->parent_class.create_channel_managers = create_channel_managers;
 	klass->parent_class.create_handle_repos = create_handle_repos;
+	klass->parent_class.get_unique_connection_name = get_unique_connection_name;
 	klass->parent_class.shut_down = shut_down;
 	klass->parent_class.start_connecting = start_connecting;
 }
