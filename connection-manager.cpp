@@ -6,7 +6,7 @@ G_DEFINE_TYPE(SteamConnectionManager, steam_connection_manager, TP_TYPE_BASE_CON
 
 static void stema_connection_manager_constructed (GObject * object)
 {
-	GLIB_CALL_PARENT(steam_connection_manager_parent_class, constructed, object);
+	GLIB_CALL_PARENT(G_OBJECT_CLASS(steam_connection_manager_parent_class)->constructed, object);
 
 	TpBaseProtocol * p = steam_protocol_new();
 	tp_base_connection_manager_add_protocol(TP_BASE_CONNECTION_MANAGER(object), p);

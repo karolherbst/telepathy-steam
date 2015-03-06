@@ -1,12 +1,11 @@
 #pragma once
 
-#define GLIB_CALL_PARENT(klass, method, object) \
-{ \
-	auto method = G_OBJECT_CLASS(klass)-> method; \
-	if(method != nullptr) \
-	{ \
-		method(object); \
-	} \
+template<typename M, typename K>
+auto GLIB_CALL_PARENT(M * method, K * object) -> decltype(method(object))
+{
+	if(method != nullptr)
+	{
+		return method(object);
+	}
+	return decltype(method(object))();
 }
-
-
