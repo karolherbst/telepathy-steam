@@ -9,6 +9,7 @@
 
 G_DEFINE_TYPE_WITH_CODE(SteamConnection, steam_connection, TP_TYPE_BASE_CONNECTION,
 	G_IMPLEMENT_INTERFACE(TP_TYPE_SVC_CONNECTION_INTERFACE_CONTACTS, tp_contacts_mixin_iface_init);
+	G_IMPLEMENT_INTERFACE(TP_TYPE_SVC_CONNECTION_INTERFACE_SIMPLE_PRESENCE, tp_presence_mixin_simple_presence_iface_init);
 	G_IMPLEMENT_INTERFACE(TP_TYPE_SVC_DBUS_PROPERTIES, tp_dbus_properties_mixin_iface_init);
 );
 
@@ -63,6 +64,12 @@ static TpPresenceStatusSpec const presence_statuses[] =
 	},
 	nullptr,
 };
+
+static void constructed(GObject * self)
+{
+	GLIB_CALL_PARENT(G_OBJECT_CLASS(steam_connection_parent_class)->constructed, self);
+	tp_presence_mixin_simple_presence_register_with_contacts_mixin(self);
+}
 
 static GPtrArray * create_channel_managers(TpBaseConnection * self)
 {
@@ -131,6 +138,7 @@ void steam_connection_class_init(SteamConnectionClass * klass)
 {
 	GObjectClass * object_class = G_OBJECT_CLASS(klass);
 
+	object_class->constructed = constructed;
 	object_class->finalize = finalize;
 
 	klass->parent_class.create_channel_factories = nullptr;
@@ -148,6 +156,8 @@ void steam_connection_class_init(SteamConnectionClass * klass)
 		get_contact_statuses,
 		set_own_status,
 		presence_statuses);
+
+	tp_presence_mixin_simple_presence_init_dbus_properties(object_class);
 }
 
 void steam_connection_init(SteamConnection * sc)
