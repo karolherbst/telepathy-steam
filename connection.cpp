@@ -4,12 +4,18 @@
 #include <thread>
 
 #include <telepathy-glib/handle-repo-dynamic.h>
+//#include <telepathy-glib/interfaces.h>
 #include <telepathy-glib/svc-generic.h>
 
 G_DEFINE_TYPE_WITH_CODE(SteamConnection, steam_connection, TP_TYPE_BASE_CONNECTION,
 	G_IMPLEMENT_INTERFACE(TP_TYPE_SVC_CONNECTION_INTERFACE_CONTACTS, tp_contacts_mixin_iface_init);
 	G_IMPLEMENT_INTERFACE(TP_TYPE_SVC_DBUS_PROPERTIES, tp_dbus_properties_mixin_iface_init);
 );
+
+static const gchar * const interfaces_always_present[] =
+{
+	//TP_IFACE_CONNECTION_INTERFACE_CONTACTS
+};
 
 static GPtrArray * create_channel_managers(TpBaseConnection *self)
 {
@@ -29,7 +35,12 @@ static void finalize(GObject * obj)
 
 static GPtrArray * get_interfaces_always_present(TpBaseConnection *self)
 {
-	return GLIB_CALL_PARENT(TP_BASE_CONNECTION_CLASS(steam_connection_parent_class)->get_interfaces_always_present, self);
+	GPtrArray * arr = GLIB_CALL_PARENT(TP_BASE_CONNECTION_CLASS(steam_connection_parent_class)->get_interfaces_always_present, self);
+	for(auto i : interfaces_always_present)
+	{
+		g_ptr_array_add(arr, g_strdup(i));
+	}
+	return arr;
 }
 
 static gchar * get_unique_connection_name(TpBaseConnection *self)
