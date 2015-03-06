@@ -7,4 +7,4 @@ ObjectPath = /org/freedesktop/Telepathy/ConnectionManager/steam
 param-username=s required register
 param-password=s secret
 EnglishName = Steam Chat
-ConnectionInterfaces=org.freedesktop.Telepathy.Connection.Interface.Contacts
+ConnectionInterfaces=org.freedesktop.Telepathy.Connection.Interface.Contacts;org.freedesktop.Telepathy.Connection.Interface.SimplePresence

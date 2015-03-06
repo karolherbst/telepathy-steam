@@ -4,7 +4,7 @@
 #include <thread>
 
 #include <telepathy-glib/handle-repo-dynamic.h>
-//#include <telepathy-glib/interfaces.h>
+#include <telepathy-glib/interfaces.h>
 #include <telepathy-glib/svc-generic.h>
 
 G_DEFINE_TYPE_WITH_CODE(SteamConnection, steam_connection, TP_TYPE_BASE_CONNECTION,
@@ -15,7 +15,8 @@ G_DEFINE_TYPE_WITH_CODE(SteamConnection, steam_connection, TP_TYPE_BASE_CONNECTI
 
 static const gchar * const interfaces_always_present[] =
 {
-	//TP_IFACE_CONNECTION_INTERFACE_CONTACTS
+	TP_IFACE_CONNECTION_INTERFACE_CONTACTS,
+	TP_IFACE_CONNECTION_INTERFACE_SIMPLE_PRESENCE
 };
 
 /*
@@ -90,6 +91,10 @@ static void finalize(GObject * obj)
 
 static GHashTable * get_contact_statuses(GObject * self, const GArray * contacts, GError * * error)
 {
+	if(error != nullptr)
+	{
+		*error = g_error_new(TP_ERROR, 0, "not implemented");
+	}
 	return nullptr;
 }
 
@@ -108,8 +113,12 @@ static gchar * get_unique_connection_name(TpBaseConnection * self)
 	return g_strdup("steam");
 }
 
-static gboolean set_own_status(GObject * self, const TpPresenceStatus * status, GError **error)
+static gboolean set_own_status(GObject * self, const TpPresenceStatus * status, GError * * error)
 {
+	if(error != nullptr)
+	{
+		*error = g_error_new(TP_ERROR, 0, "not implemented");
+	}
 	return false;
 }
 
