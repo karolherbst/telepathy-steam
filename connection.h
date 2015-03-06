@@ -2,15 +2,18 @@
 
 #include <glib-object.h>
 #include <telepathy-glib/base-connection.h>
+#include <telepathy-glib/contacts-mixin.h>
 
 struct SteamConnection
 {
 	TpBaseConnection parent;
+	TpContactsMixin contacts;
 };
 
 struct SteamConnectionClass
 {
 	TpBaseConnectionClass parent_class;
+	TpContactsMixinClass contacts_class;
 };
 
 GType steam_connection_get_type();
