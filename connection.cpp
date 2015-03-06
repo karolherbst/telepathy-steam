@@ -22,12 +22,12 @@ static TpPresenceStatusSpec const presence_statuses[] =
 	nullptr
 };
 
-static GPtrArray * create_channel_managers(TpBaseConnection *self)
+static GPtrArray * create_channel_managers(TpBaseConnection * self)
 {
 	return g_ptr_array_new();
 }
 
-static void create_handle_repos(TpBaseConnection *self, TpHandleRepoIface *repos[TP_NUM_HANDLE_TYPES])
+static void create_handle_repos(TpBaseConnection * self, TpHandleRepoIface * repos[TP_NUM_HANDLE_TYPES])
 {
 	repos[TP_HANDLE_TYPE_CONTACT] = tp_dynamic_handle_repo_new(TP_HANDLE_TYPE_CONTACT, nullptr, nullptr);
 }
@@ -44,7 +44,7 @@ static GHashTable * get_contact_statuses(GObject * self, const GArray * contacts
 	return nullptr;
 }
 
-static GPtrArray * get_interfaces_always_present(TpBaseConnection *self)
+static GPtrArray * get_interfaces_always_present(TpBaseConnection * self)
 {
 	GPtrArray * arr = GLIB_CALL_PARENT(TP_BASE_CONNECTION_CLASS(steam_connection_parent_class)->get_interfaces_always_present, self);
 	for(auto i : interfaces_always_present)
@@ -54,7 +54,7 @@ static GPtrArray * get_interfaces_always_present(TpBaseConnection *self)
 	return arr;
 }
 
-static gchar * get_unique_connection_name(TpBaseConnection *self)
+static gchar * get_unique_connection_name(TpBaseConnection * self)
 {
 	return g_strdup("steam");
 }
@@ -64,12 +64,12 @@ static gboolean set_own_status(GObject * self, const TpPresenceStatus * status, 
 	return false;
 }
 
-static void shut_down(TpBaseConnection *self)
+static void shut_down(TpBaseConnection * self)
 {
 	tp_base_connection_finish_shutdown(self);
 }
 
-static gboolean start_connecting(TpBaseConnection *self, GError **error)
+static gboolean start_connecting(TpBaseConnection * self, GError * * error)
 {
 	// the steam id is trivially to get, because we know it already
 	gchar sid[] = "";
