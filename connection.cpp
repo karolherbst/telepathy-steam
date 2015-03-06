@@ -17,6 +17,11 @@ static const gchar * const interfaces_always_present[] =
 	//TP_IFACE_CONNECTION_INTERFACE_CONTACTS
 };
 
+static TpPresenceStatusSpec const presence_statuses[] =
+{
+	nullptr
+};
+
 static GPtrArray * create_channel_managers(TpBaseConnection *self)
 {
 	return g_ptr_array_new();
@@ -29,8 +34,14 @@ static void create_handle_repos(TpBaseConnection *self, TpHandleRepoIface *repos
 
 static void finalize(GObject * obj)
 {
+	tp_presence_mixin_finalize(obj);
 	tp_contacts_mixin_finalize(obj);
 	GLIB_CALL_PARENT(G_OBJECT_CLASS(steam_connection_parent_class)->finalize, obj);
+}
+
+static GHashTable * get_contact_statuses(GObject * self, const GArray * contacts, GError * * error)
+{
+	return nullptr;
 }
 
 static GPtrArray * get_interfaces_always_present(TpBaseConnection *self)
@@ -46,6 +57,11 @@ static GPtrArray * get_interfaces_always_present(TpBaseConnection *self)
 static gchar * get_unique_connection_name(TpBaseConnection *self)
 {
 	return g_strdup("steam");
+}
+
+static gboolean set_own_status(GObject * self, const TpPresenceStatus * status, GError **error)
+{
+	return false;
 }
 
 static void shut_down(TpBaseConnection *self)
@@ -85,10 +101,16 @@ void steam_connection_class_init(SteamConnectionClass * klass)
 
 	tp_dbus_properties_mixin_class_init(object_class, G_STRUCT_OFFSET(SteamConnectionClass, properties_class));
 	tp_contacts_mixin_class_init(object_class, G_STRUCT_OFFSET(SteamConnectionClass, contacts_class));
+	tp_presence_mixin_class_init(object_class, G_STRUCT_OFFSET(SteamConnectionClass, presence_class),
+		nullptr,
+		get_contact_statuses,
+		set_own_status,
+		presence_statuses);
 }
 
 void steam_connection_init(SteamConnection * sc)
 {
 	GObject * obj = G_OBJECT(sc);
 	tp_contacts_mixin_init(obj, G_STRUCT_OFFSET(SteamConnection, contacts));
+	tp_presence_mixin_init(obj, G_STRUCT_OFFSET(SteamConnection, presence));
 }

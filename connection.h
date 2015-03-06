@@ -3,11 +3,14 @@
 #include <glib-object.h>
 #include <telepathy-glib/base-connection.h>
 #include <telepathy-glib/contacts-mixin.h>
+#include <telepathy-glib/dbus-properties-mixin.h>
+#include <telepathy-glib/presence-mixin.h>
 
 struct SteamConnection
 {
 	TpBaseConnection parent;
 	TpContactsMixin contacts;
+	TpPresenceMixin presence;
 };
 
 struct SteamConnectionClass
@@ -15,6 +18,7 @@ struct SteamConnectionClass
 	TpBaseConnectionClass parent_class;
 	TpDBusPropertiesMixinClass properties_class;
 	TpContactsMixinClass contacts_class;
+	TpPresenceMixinClass presence_class;
 };
 
 GType steam_connection_get_type();
