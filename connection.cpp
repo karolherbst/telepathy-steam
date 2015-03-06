@@ -17,6 +17,11 @@ static void create_handle_repos(TpBaseConnection *self, TpHandleRepoIface *repos
 	repos[TP_HANDLE_TYPE_CONTACT] = tp_dynamic_handle_repo_new(TP_HANDLE_TYPE_CONTACT, nullptr, nullptr);
 }
 
+static GPtrArray * get_interfaces_always_present(TpBaseConnection *self)
+{
+	return GLIB_CALL_PARENT(TP_BASE_CONNECTION_CLASS(steam_connection_parent_class)->get_interfaces_always_present, self);
+}
+
 static gchar * get_unique_connection_name(TpBaseConnection *self)
 {
 	return g_strdup("steam");
@@ -48,6 +53,7 @@ void steam_connection_class_init(SteamConnectionClass * klass)
 	klass->parent_class.create_channel_factories = nullptr;
 	klass->parent_class.create_channel_managers = create_channel_managers;
 	klass->parent_class.create_handle_repos = create_handle_repos;
+	klass->parent_class.get_interfaces_always_present = get_interfaces_always_present;
 	klass->parent_class.get_unique_connection_name = get_unique_connection_name;
 	klass->parent_class.shut_down = shut_down;
 	klass->parent_class.start_connecting = start_connecting;
