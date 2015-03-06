@@ -5,7 +5,9 @@
 
 #include <telepathy-glib/handle-repo-dynamic.h>
 
-G_DEFINE_TYPE(SteamConnection, steam_connection, TP_TYPE_BASE_CONNECTION);
+G_DEFINE_TYPE_WITH_CODE(SteamConnection, steam_connection, TP_TYPE_BASE_CONNECTION,
+	G_IMPLEMENT_INTERFACE(TP_TYPE_SVC_CONNECTION_INTERFACE_CONTACTS, tp_contacts_mixin_iface_init)
+);
 
 static GPtrArray * create_channel_managers(TpBaseConnection *self)
 {
@@ -20,6 +22,7 @@ static void create_handle_repos(TpBaseConnection *self, TpHandleRepoIface *repos
 static void finalize(GObject * obj)
 {
 	tp_contacts_mixin_finalize(obj);
+	GLIB_CALL_PARENT(G_OBJECT_CLASS(steam_connection_parent_class)->finalize, obj);
 }
 
 static GPtrArray * get_interfaces_always_present(TpBaseConnection *self)
