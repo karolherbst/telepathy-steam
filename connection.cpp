@@ -17,9 +17,51 @@ static const gchar * const interfaces_always_present[] =
 	//TP_IFACE_CONNECTION_INTERFACE_CONTACTS
 };
 
+/*
+ * the steam chat has the following states:
+ *
+ * Online
+ * Away
+ * Busy
+ * Looking to Play
+ * Looking to Trade
+ * Offline
+ *
+ * there is no status with a custom message!
+ */
 static TpPresenceStatusSpec const presence_statuses[] =
 {
-	nullptr
+	{
+		.name = "Online",
+		.presence_type = TP_CONNECTION_PRESENCE_TYPE_AVAILABLE,
+		.self = true,
+	},
+	{
+		.name = "Away",
+		.presence_type = TP_CONNECTION_PRESENCE_TYPE_AWAY,
+		.self = true,
+	},
+	{
+		.name = "Busy",
+		.presence_type = TP_CONNECTION_PRESENCE_TYPE_BUSY,
+		.self = true,
+	},
+	{
+		.name = "Looking to Play",
+		.presence_type = TP_CONNECTION_PRESENCE_TYPE_AVAILABLE,
+		.self = true,
+	},
+	{
+		.name = "Looking to Trade",
+		.presence_type = TP_CONNECTION_PRESENCE_TYPE_AVAILABLE,
+		.self = true,
+	},
+	{
+		.name = "Offline",
+		.presence_type = TP_CONNECTION_PRESENCE_TYPE_OFFLINE,
+		.self = true,
+	},
+	nullptr,
 };
 
 static GPtrArray * create_channel_managers(TpBaseConnection * self)
