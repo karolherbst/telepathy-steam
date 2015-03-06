@@ -45,6 +45,9 @@ add_executable(telepathy-steam
   connection.cpp
   main.cpp
   protocol.cpp
+# random files not included in IDEs
+  glib-helpers.h
+  steam.manager
 )
 
 target_link_libraries(telepathy-steam
