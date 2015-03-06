@@ -4,9 +4,11 @@
 #include <thread>
 
 #include <telepathy-glib/handle-repo-dynamic.h>
+#include <telepathy-glib/svc-generic.h>
 
 G_DEFINE_TYPE_WITH_CODE(SteamConnection, steam_connection, TP_TYPE_BASE_CONNECTION,
-	G_IMPLEMENT_INTERFACE(TP_TYPE_SVC_CONNECTION_INTERFACE_CONTACTS, tp_contacts_mixin_iface_init)
+	G_IMPLEMENT_INTERFACE(TP_TYPE_SVC_CONNECTION_INTERFACE_CONTACTS, tp_contacts_mixin_iface_init);
+	G_IMPLEMENT_INTERFACE(TP_TYPE_SVC_DBUS_PROPERTIES, tp_dbus_properties_mixin_iface_init);
 );
 
 static GPtrArray * create_channel_managers(TpBaseConnection *self)
@@ -70,6 +72,7 @@ void steam_connection_class_init(SteamConnectionClass * klass)
 	klass->parent_class.shut_down = shut_down;
 	klass->parent_class.start_connecting = start_connecting;
 
+	tp_dbus_properties_mixin_class_init(object_class, G_STRUCT_OFFSET(SteamConnectionClass, properties_class));
 	tp_contacts_mixin_class_init(object_class, G_STRUCT_OFFSET(SteamConnectionClass, contacts_class));
 }
 

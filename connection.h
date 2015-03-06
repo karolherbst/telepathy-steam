@@ -13,6 +13,7 @@ struct SteamConnection
 struct SteamConnectionClass
 {
 	TpBaseConnectionClass parent_class;
+	TpDBusPropertiesMixinClass properties_class;
 	TpContactsMixinClass contacts_class;
 };
 
