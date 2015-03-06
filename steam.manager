@@ -4,4 +4,6 @@ BusName = org.freedesktop.Telepathy.ConnectionManager.steam
 ObjectPath = /org/freedesktop/Telepathy/ConnectionManager/steam
 
 [Protocol steam]
+param-username=s required register
+param-password=s secret
 EnglishName = Steam Chat
