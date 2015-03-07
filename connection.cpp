@@ -15,7 +15,7 @@ G_DEFINE_TYPE_WITH_CODE(SteamConnection, steam_connection, TP_TYPE_BASE_CONNECTI
 
 static const gchar * const interfaces_always_present[] =
 {
-	TP_IFACE_CONNECTION_INTERFACE_CONTACTS,
+	//TP_IFACE_CONNECTION_INTERFACE_CONTACTS,
 	TP_IFACE_CONNECTION_INTERFACE_SIMPLE_PRESENCE
 };
 
@@ -91,11 +91,13 @@ static void finalize(GObject * obj)
 
 static GHashTable * get_contact_statuses(GObject * self, const GArray * contacts, GError * * error)
 {
-	if(error != nullptr)
+	GHashTable * contact_statuses = g_hash_table_new_full(g_direct_hash, g_direct_equal, nullptr, (GDestroyNotify)tp_presence_status_free);
+	for(guint i = 0; i < contacts->len; i++)
 	{
-		*error = g_error_new(TP_ERROR, 0, "not implemented");
+		TpHandle h = g_array_index(contacts, TpHandle, i);
+		g_hash_table_insert(contact_statuses, GUINT_TO_POINTER(h), tp_presence_status_new(4, nullptr));
 	}
-	return nullptr;
+	return contact_statuses;
 }
 
 static GPtrArray * get_interfaces_always_present(TpBaseConnection * self)
@@ -115,10 +117,12 @@ static gchar * get_unique_connection_name(TpBaseConnection * self)
 
 static gboolean set_own_status(GObject * self, const TpPresenceStatus * status, GError * * error)
 {
-	if(error != nullptr)
+	if(status != nullptr)
 	{
-		*error = g_error_new(TP_ERROR, 0, "not implemented");
+		tp_presence_mixin_emit_one_presence_update(self, tp_base_connection_get_self_handle(TP_BASE_CONNECTION(self)), status);
+		return true;
 	}
+
 	return false;
 }
 
