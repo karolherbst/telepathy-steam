@@ -63,7 +63,9 @@ static TpPresenceStatusSpec const presence_statuses[] =
 		.presence_type = TP_CONNECTION_PRESENCE_TYPE_OFFLINE,
 		.self = true,
 	},
-	nullptr,
+	{
+		.name = nullptr
+	}
 };
 
 static void constructed(GObject * self)

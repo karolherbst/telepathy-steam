@@ -27,7 +27,7 @@ endforeach()
 # find all required libraries first
 pkg_check_modules(DBUS REQUIRED dbus-1)
 pkg_check_modules(GOBJECT REQUIRED gobject-2.0)
-pkg_check_modules(TP_GLIB REQUIRED telepathy-glib>=0.11.11)
+pkg_check_modules(TP_GLIB REQUIRED telepathy-glib>=0.11.13)
 
 include_directories(
   ${DBUS_INCLUDE_DIRS}
